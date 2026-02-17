@@ -1,3 +1,5 @@
+alert("JS CARGADO 🔥");
+
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("btnCalcular");
 
@@ -30,3 +32,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("estatus").value = estatus;
   });
 });
+
