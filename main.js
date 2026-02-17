@@ -1,44 +1,32 @@
-// la funcion principal del main es:
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("btnCalcular");
 
-//  1. Obtiene los valores del formulario 
-//  2. Valida que los campos tengan información
-//  3. La funcion fetch hace las peticiones al servidor
-//  4. /calcular-promedio es la ruta a donde se estan enviando la petición
-//  5. method: 'POST' → Vamos a enviar datos
-//  6. headers → Estamos enviando JSON
-//  7. body → Aquí van los datos convertidos a texto JSON
+  btn.addEventListener("click", () => {
+    const nombre = document.getElementById("nombre").value.trim();
+    const u1 = parseFloat(document.getElementById("unidad1").value);
+    const u2 = parseFloat(document.getElementById("unidad2").value);
+    const u3 = parseFloat(document.getElementById("unidad3").value);
 
-document.getElementById('btnCalcular').addEventListener('click', () => {
-
-    const nombre = document.getElementById('nombre').value;
-    const unidad1 = document.getElementById('unidad1').value;
-    const unidad2 = document.getElementById('unidad2').value;
-    const unidad3 = document.getElementById('unidad3').value;
-
-    if (!nombre || !unidad1 || !unidad2 || !unidad3) {
-        alert('Por favor completa todos los campos');
-        return;
+    if (!nombre) {
+      alert("Ingresa tu nombre.");
+      return;
     }
 
-    fetch('/calcular-promedio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            nombre,
-            unidad1,
-            unidad2,
-            unidad3
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('promedio').value = data.promedio.toFixed(2);
-        document.getElementById('estatus').value = data.estatus;
-    })
-    .catch(err => console.error(err));
+    if ([u1, u2, u3].some(n => Number.isNaN(n))) {
+      alert("Ingresa las 3 calificaciones con números válidos.");
+      return;
+    }
 
+    // (opcional) valida rango 0 a 10
+    if ([u1, u2, u3].some(n => n < 0 || n > 10)) {
+      alert("Las calificaciones deben estar entre 0 y 10.");
+      return;
+    }
+
+    const promedio = (u1 + u2 + u3) / 3;
+    const estatus = promedio >= 6 ? "Aprobado" : "Reprobado";
+
+    document.getElementById("promedio").value = promedio.toFixed(2);
+    document.getElementById("estatus").value = estatus;
+  });
 });
-
-// Boton para limpiar las cajas del formulario
-
-document.getElementById()
